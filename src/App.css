@@ -1,38 +1,102 @@
-.App {
+
+.header {
   text-align: center;
+  padding: 50px 30px;
+  background: #000000 url("banner.jpg") center center no-repeat;
 }
 
-.App-logo {
-  height: 40vmin;
+.logo {
+  margin: 0 auto;
+  height: 150px;
+  cursor: pointer;
+  animation: zoom-in-zoom-out 1s ease forwards;
+}
+
+.masthead {
+  padding: 30px;
+  background: #f4f4f4;
+}
+
+.results {
+  overflow: auto;
+  padding: 20px;
+}
+
+table {
+  text-align: left;
+  font-size: 16px;
+}
+
+thead tr {
+  background: #f4f4f4;
+}
+
+tr {
+  border-bottom: 4px solid #f4f4f4;
+}
+
+td, th {
+  padding: 10px;
+  border: 0;
+}
+
+.label {
+  display: block;
+  margin: 0 0 10px;
+  text-align: left;
+  font-weight: 500;
+}
+
+.selector {
+  width: 300px;
+}
+.selector {
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
+  padding-right: 10px;
+  position: relative;
+  z-index: 1;
+}
+.selector:before {
+  content: "▼";
+  position: absolute;
+  font-size: 8px;
+  -webkit-transform: scaleY(0.7);
+  -moz-transform: scaleY(0.7);
+  -ms-transform: scaleY(0.7);
+  -o-transform: scaleY(0.7);
+  transform: scaleY(0.7);
+  right: 0;
+  top: 50%;
+  margin-top: -4px;
+  background: transparent;
+  width: 30px;
+  text-align: center;
   pointer-events: none;
+  z-index: 2;
+}
+.selector select {
+  background: #ffffff;
+  border-radius: 0;
+  padding: 5px;
+  /* If you add too much padding here, the options won't show in IE */
+  border: 0;
+  outline: none;
+  color: inherit;
+  height: 2.1em;
+  width: calc(100% + 50px);
+  max-width: none !important;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+@keyframes zoom-in-zoom-out {
+  0% {
+    transform: scale(1, 1);
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  50% {
+    transform: scale(1.5, 1.5);
   }
-  to {
-    transform: rotate(360deg);
+  100% {
+    transform: scale(1, 1);
   }
 }
