@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 
 const baseurl = 'https://swapi.dev/api/starships/';
 
@@ -16,14 +15,20 @@ class Starships extends React.Component {
         this.getDataFromApi();
     }
 
-    getDataFromApi = async () => {
-        const response = await axios.get(baseurl);
-        const data = response.data.results;
-        console.log('data', data);
+    async getDataFromApi() {
+        const results = [];
+        let url = baseurl;
+
+        do {
+            const res = await fetch(url);
+            const data = await res.json();
+            url = data.next;
+            results.push(...data.results);
+        } while(url)
         this.setState({
-            starships: data,
+            starships: results,
         })
-        console.log('state', this.state);
+        return results;
     }
 
     handleChange(event) {
