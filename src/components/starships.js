@@ -7,15 +7,16 @@ class Starships extends React.Component {
         super(props);
         this.state = {
             starships: [],
-            manufacturer: '',
+            selectedManufacturer: '',
+            manufacturers: [],
         }
     }
 
     componentDidMount() {
-        this.getDataFromApi();
+        this.getStarships();
     }
 
-    async getDataFromApi() {
+    async getStarships() {
         const results = [];
         let url = baseurl;
 
@@ -27,31 +28,25 @@ class Starships extends React.Component {
         } while(url)
         this.setState({
             starships: results,
+            manufacturers: results.map(result => result.manufacturer).sort(),
         })
-        return results;
     }
 
     handleChange(event) {
         let value = event.target.value;
         this.setState({
-            manufacturer: value,
+            selectedManufacturer: value,
         });
     }
 
     render() {
-        const { starships, manufacturer } = this.state;
+        const { starships, selectedManufacturer, manufacturers } = this.state;
         const getFirstRecord = Array.isArray(starships) && starships.length ? starships[0] : {};
         const dataKeys = Object.keys(getFirstRecord);
-        const manufacturers = starships.map(item => (
-            item.manufacturer
-        ));
+
         const filteredManufacturers = manufacturers.filter((item, index) => {
             return manufacturers.indexOf(item) === index;
-        }).sort();
-
-        console.log('headings', getFirstRecord);
-        console.log('new manufacturer', this.state.manufacturer);
-        console.log('unique manufacturers list', filteredManufacturers);
+        });
 
         return (
             <div className="starships">
@@ -66,7 +61,7 @@ class Starships extends React.Component {
                             <option value="">-- All starships --</option>
 
                             { filteredManufacturers.map(item => (
-                                <option value={item}>{item}</option>
+                                <option key={item} value={item}>{item}</option>
                             ))}
                         </select>
                     </div>
@@ -78,7 +73,7 @@ class Starships extends React.Component {
                             <thead>
                             <tr>
                                 {dataKeys.map(heading =>
-                                    <th>
+                                    <th key={heading}>
                                         {
                                             heading
                                             .split('_').join(' ')
@@ -89,10 +84,10 @@ class Starships extends React.Component {
                             </tr>
                             </thead>
                             <tbody>
-                            {!manufacturer.length ? starships.map(ship => {
-                                return <tr>{dataKeys.map(heading => <td>{ship[heading]}</td>)}</tr>
-                            }) : starships.filter(ship => ship.manufacturer.includes(manufacturer)).map(ship => {
-                                return <tr>{dataKeys.map(heading => <td>{ship[heading]}</td>)}</tr>
+                            {!selectedManufacturer.length ? starships.map(ship => {
+                                return <tr key={ship.model}>{dataKeys.map(heading => <td key={heading}>{ship[heading]}</td>)}</tr>
+                            }) : starships.filter(ship => ship.manufacturer.includes(selectedManufacturer)).map(ship => {
+                                return <tr key={ship.model}>{dataKeys.map(heading => <td key={heading}>{ship[heading]}</td>)}</tr>
                             })}
                             </tbody>
                         </table>

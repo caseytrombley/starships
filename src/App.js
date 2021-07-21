@@ -22,9 +22,7 @@ function App() {
 }
 
 function starWars() {
-    // window.location.reload(false);
     new Audio(audio).play();
 }
-
 
 export default App;
